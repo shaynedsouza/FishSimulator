@@ -10,7 +10,7 @@ public class FishAnimator : MonoBehaviour
     Rigidbody rigidBody;
     float cooldownPeriod = 1f;
     float cooldownCounter;
-    float forceMultiplier = 0.5f;
+    float forceMultiplier = 0.3f;
     bool canInteract = false;
 
 
