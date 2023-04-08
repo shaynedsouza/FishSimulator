@@ -1,0 +1,13 @@
+# Exported with QuadFace Tools (0.12.0)
+# SketchUp 17.2.2555
+# Model name: Untitled
+
+newmtl FrontColor
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.330000 0.330000 0.330000
+
+newmtl [0038_Orange]
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 0.647059 0.000000
+Ks 0.330000 0.330000 0.330000
