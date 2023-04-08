@@ -6,7 +6,7 @@ using System;
 public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager instance;
-    public Action<bool> CanInteractNotifier;
+    public static Action<bool> CanInteractNotifier;
 
     private void Awake()
     {
@@ -14,5 +14,10 @@ public class GameplayManager : MonoBehaviour
             Destroy(gameObject);
         else
             instance = this;
+    }
+
+    private void Start()
+    {
+        CanInteractNotifier.Invoke(true);
     }
 }
