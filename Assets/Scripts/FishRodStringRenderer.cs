@@ -5,24 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class FishRodStringRenderer : MonoBehaviour
 {
-    [SerializeField] List<Transform> linePoints;
+    [SerializeField] Transform linePointParent;
     LineRenderer lineRenderer;
 
 
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = linePoints.Count;
+        lineRenderer.positionCount = linePointParent.childCount;
 
     }
 
     void Update()
     {
 
-        if (linePoints.Count <= 0) return;
+        if (linePointParent.childCount <= 0) return;
 
-        for (int i = 0; i < linePoints.Count; i++)
-            lineRenderer.SetPosition(i, linePoints[i].position);
+        for (int i = 0; i < linePointParent.childCount; i++)
+            lineRenderer.SetPosition(i, linePointParent.GetChild(i).position);
 
     }
 }
