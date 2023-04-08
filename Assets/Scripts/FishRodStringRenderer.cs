@@ -7,7 +7,10 @@ public class FishRodStringRenderer : MonoBehaviour
 {
     [SerializeField] Transform linePointParent;
     LineRenderer lineRenderer;
-
+    public Transform lastPoint
+    {
+        get { return linePointParent.GetChild(linePointParent.childCount - 1); }
+    }
 
     private void Start()
     {
