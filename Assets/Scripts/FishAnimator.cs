@@ -8,8 +8,6 @@ public class FishAnimator : MonoBehaviour
 {
     Animator animator;
     Rigidbody rigidBody;
-    float cooldownPeriod = 1f;
-    float cooldownCounter;
     float forceMultiplier = 0.3f;
     bool canInteract = false;
 
@@ -32,11 +30,7 @@ public class FishAnimator : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
     }
 
-    private void Update()
-    {
-        cooldownCounter -= Time.deltaTime;
 
-    }
 
 
     private void OnTriggerEnter(Collider other)
@@ -48,15 +42,13 @@ public class FishAnimator : MonoBehaviour
             //Turn in the opposite direction
             newAngle = transform.rotation.y + 180f;
         }
-        else if (other.tag == "Fish")// && cooldownCounter <= 0f)
+        else if (other.tag == "Fish")
         {
             newAngle = Random.Range(0f, 360f);
         }
 
-        cooldownCounter = cooldownPeriod;
         rigidBody.transform.Rotate(0, newAngle, 0);
         rigidBody.velocity = transform.forward * forceMultiplier;
-        // rigidBody.AddForce(transform.forward * forceMultiplier, ForceMode.Acceleration);
 
     }
 
@@ -76,7 +68,6 @@ public class FishAnimator : MonoBehaviour
         {
             rigidBody.transform.Rotate(0, Random.Range(0f, 360f), 0);
             rigidBody.velocity = transform.forward * forceMultiplier;
-            // rigidBody.AddForce(transform.forward * forceMultiplier, ForceMode.Acceleration);
         }
     }
 
