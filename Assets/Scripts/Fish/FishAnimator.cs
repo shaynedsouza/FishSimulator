@@ -11,6 +11,13 @@ public class FishAnimator : MonoBehaviour
     float forceMultiplier = 0.3f;
     bool canInteract = false;
 
+    string swimNormal = "Fish_Armature_Swimming_Normal";
+    string swimImpusle = "Fish_Armature_Swimming_Impulse";
+    string swimFast = "Fish_Armature_Swimming_Fast";
+    string swimOutOfWater = "Fish_Armature_Out_Of_Water";
+    string swimAttack = "Fish_Armature_Attack";
+    string swimDeath = "Fish_Armature_Death";
+
 
 
     private void OnEnable()
