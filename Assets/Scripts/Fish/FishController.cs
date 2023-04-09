@@ -8,8 +8,8 @@ public class FishController : MonoBehaviour
 {
 
     float forceMultiplier = 0.3f;
-    bool canInteract = false;
-
+    [SerializeField] bool canInteract = false, canTargetBait = false;
+    [SerializeField] bool isTargetingBait = false;
     Rigidbody rigidBody;
 
 
@@ -17,12 +17,14 @@ public class FishController : MonoBehaviour
     private void OnEnable()
     {
         GameplayManager.CanInteractNotifier += CanInteractListener;
+        GameplayManager.CanTargetBaitNotifier += CanTargetBaitListener;
     }
 
 
     private void OnDisable()
     {
         GameplayManager.CanInteractNotifier -= CanInteractListener;
+        GameplayManager.CanTargetBaitNotifier -= CanTargetBaitListener;
 
     }
 
@@ -43,17 +45,45 @@ public class FishController : MonoBehaviour
         {
             //Turn in the opposite direction
             newAngle = transform.rotation.y + 180f;
+            rigidBody.transform.Rotate(0, newAngle, 0);
+            rigidBody.velocity = transform.forward * forceMultiplier;
         }
+
+        else if (other.tag == "Bait")
+        {
+            if (!canTargetBait) return;
+
+            Debug.Log("Bait");
+            isTargetingBait = GameplayManager.instance.TargetBait();
+        }
+
         else if (other.tag == "Fish")
         {
             newAngle = Random.Range(0f, 360f);
+            rigidBody.transform.Rotate(0, newAngle, 0);
+            rigidBody.velocity = transform.forward * forceMultiplier;
         }
-
-        rigidBody.transform.Rotate(0, newAngle, 0);
-        rigidBody.velocity = transform.forward * forceMultiplier;
-
     }
 
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Bait")
+        {
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Bait" && isTargetingBait)
+        {
+            //Release isTargetingBait and gameplaymanager
+            isTargetingBait = false;
+            GameplayManager.instance.ReleaseTargetBait();
+
+        }
+    }
 
 
 
@@ -69,6 +99,13 @@ public class FishController : MonoBehaviour
             rigidBody.transform.Rotate(0, Random.Range(0f, 360f), 0);
             rigidBody.velocity = transform.forward * forceMultiplier;
         }
+    }
+
+
+
+    void CanTargetBaitListener(bool value)
+    {
+        canTargetBait = value;
     }
 
     #endregion

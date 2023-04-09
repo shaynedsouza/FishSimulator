@@ -503,9 +503,11 @@ GameObject:
   - component: {fileID: 352776938}
   - component: {fileID: 352776940}
   - component: {fileID: 352776939}
+  - component: {fileID: 352776941}
+  - component: {fileID: 352776942}
   m_Layer: 0
   m_Name: LastPoint
-  m_TagString: Untagged
+  m_TagString: Bait
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -573,6 +575,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352776937}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &352776941
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352776937}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &352776942
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352776937}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &615201558 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 25d5f60dd5da8eb4190a7c2e96ba6397, type: 3}
@@ -829,6 +860,10 @@ PrefabInstance:
     - target: {fileID: 310533540127245272, guid: 90a5dd8ac6c62e94c84868acadbd2230, type: 3}
       propertyPath: m_Name
       value: ParrotFish
+      objectReference: {fileID: 0}
+    - target: {fileID: 310533540127245272, guid: 90a5dd8ac6c62e94c84868acadbd2230, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1082249504005118306, guid: 90a5dd8ac6c62e94c84868acadbd2230, type: 3}
       propertyPath: m_RootOrder
@@ -1854,6 +1889,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedSnapper
       objectReference: {fileID: 0}
+    - target: {fileID: 5977241437661839, guid: 95d2f5b660cb29b43a3865c33c361f97, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 819352665049837621, guid: 95d2f5b660cb29b43a3865c33c361f97, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -2029,6 +2068,10 @@ PrefabInstance:
     - target: {fileID: 215762102665481790, guid: 71ef352461495c848946f047174c440b, type: 3}
       propertyPath: m_Name
       value: RoyalGramma
+      objectReference: {fileID: 0}
+    - target: {fileID: 215762102665481790, guid: 71ef352461495c848946f047174c440b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 699565173638059140, guid: 71ef352461495c848946f047174c440b, type: 3}
       propertyPath: m_RootOrder
