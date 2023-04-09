@@ -7,15 +7,13 @@ public class FishRodStringRenderer : MonoBehaviour
 {
     [SerializeField] Transform linePointParent;
     LineRenderer lineRenderer;
-    public Transform lastPoint
-    {
-        get { return linePointParent.GetChild(linePointParent.childCount - 1); }
-    }
+    public Transform lastPoint;
+
 
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = linePointParent.childCount;
+        lineRenderer.positionCount = linePointParent.childCount + 1;
 
     }
 
@@ -24,8 +22,13 @@ public class FishRodStringRenderer : MonoBehaviour
 
         if (linePointParent.childCount <= 0) return;
 
-        for (int i = 0; i < linePointParent.childCount; i++)
+        int i = 0;
+        for (i = 0; i < linePointParent.childCount; i++)
             lineRenderer.SetPosition(i, linePointParent.GetChild(i).position);
+
+        lineRenderer.SetPosition(i, lastPoint.position);
+
+
 
     }
 }

@@ -18,8 +18,9 @@ public class FishRodHandler : MonoBehaviour
     [SerializeField] float maxLocalZOffsetString = 1f;
 
 
-    // Range for rotation of the rod and position of the string
+    // Range for rotation of the rod 
     Vector2 xRodRange, yRodRange;
+    //Range for position of the string
     Vector2 xLocalStringRange, zLocalStringRange;
 
 
@@ -39,7 +40,6 @@ public class FishRodHandler : MonoBehaviour
     private void OnDisable()
     {
         GameplayManager.CanInteractNotifier -= CanInteractListener;
-
     }
 
 
@@ -59,7 +59,6 @@ public class FishRodHandler : MonoBehaviour
 
 
         //Getting the position range for the string
-
         lastPoint = fishRodStringRenderer.lastPoint;
         xLocalStringRange.x = lastPoint.localPosition.x - maxLocalXOffsetString;
         xLocalStringRange.y = lastPoint.localPosition.x + maxLocalXOffsetString;
@@ -103,7 +102,6 @@ public class FishRodHandler : MonoBehaviour
     void CanInteractListener(bool value)
     {
         canInteract = value;
-
     }
 
     #endregion
