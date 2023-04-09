@@ -11,8 +11,8 @@ public class FishController : MonoBehaviour
     [SerializeField] bool canInteract = false, canTargetBait = false;
     [SerializeField] bool isTargetingBait = false;
     Rigidbody rigidBody;
-
-
+    float timeToTargetCompletion = 4f;
+    float elapsedTimeToTargetCompletion;
 
     private void OnEnable()
     {
@@ -36,6 +36,21 @@ public class FishController : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (isTargetingBait)
+        {
+            elapsedTimeToTargetCompletion -= Time.deltaTime;
+
+            if (elapsedTimeToTargetCompletion <= 0f)
+            {
+                isTargetingBait = false;
+                // GameplayManager.instance.ReleaseTargetBait();
+                Debug.Log("Fight it off");
+            }
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -53,8 +68,13 @@ public class FishController : MonoBehaviour
         {
             if (!canTargetBait) return;
 
-            Debug.Log("Bait");
-            isTargetingBait = GameplayManager.instance.TargetBait();
+            // Debug.Log("Bait");
+
+            if (GameplayManager.instance.TargetBait())
+            {
+                elapsedTimeToTargetCompletion = timeToTargetCompletion;
+                isTargetingBait = true;
+            }
         }
 
         else if (other.tag == "Fish")
@@ -67,12 +87,12 @@ public class FishController : MonoBehaviour
 
 
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "Bait")
-        {
-        }
-    }
+    // private void OnTriggerStay(Collider other)
+    // {
+    //     if (other.tag == "Bait")
+    //     {
+    //     }
+    // }
 
     private void OnTriggerExit(Collider other)
     {
