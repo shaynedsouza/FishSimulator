@@ -29,13 +29,22 @@ public class FishRodHandler : MonoBehaviour
     FishRodStringRenderer fishRodStringRenderer;
     Transform lastPoint;
 
+    public static FishRodHandler instance;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(gameObject);
+        else
+            instance = this;
+    }
+
 
     private void OnEnable()
     {
         GameplayManager.CanInteractNotifier += CanInteractListener;
         GameplayManager.CanTargetBaitNotifier += CanTargetBaitListener;
     }
-
 
 
     private void OnDisable()

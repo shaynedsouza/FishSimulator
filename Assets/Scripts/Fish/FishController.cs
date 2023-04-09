@@ -7,7 +7,9 @@ using UnityEngine;
 public class FishController : MonoBehaviour
 {
 
-    float forceMultiplier = 0.3f;
+    float forceMultiplier;
+    float swimMultiplier = 0.3f;
+    float struggleMultiplier = 1f;
     [SerializeField] bool canInteract = false, canTargetBait = false;
     [SerializeField] bool isTargetingBait = false;
     Rigidbody rigidBody;
@@ -32,7 +34,7 @@ public class FishController : MonoBehaviour
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
-
+        forceMultiplier = swimMultiplier;
     }
 
 
@@ -54,23 +56,18 @@ public class FishController : MonoBehaviour
     void FightItOff()
     {
         Debug.Log("Fight it off");
-
-
-        // if (TryGetComponent<FishRodStringRenderer>(out FishRodStringRenderer fishRodStringRendererge))
-        FishRodHandler fishRodHandler = FindObjectOfType<FishRodHandler>();
-
-        if (fishRodHandler != null)
-        {
-            fishRodHandler.SetLastPointParent(gameObject);
-        }
-
+        FishRodHandler.instance.SetLastPointParent(gameObject);
         //TODO: Reset rod to detect fishes again
+        forceMultiplier = struggleMultiplier;
 
+        rigidBody.transform.Rotate(0, Random.Range(0f, 360f), 0);
+        rigidBody.velocity = transform.forward * forceMultiplier;
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
+        if (isTargetingBait) return;
         float newAngle = 0f;
 
         if (other.tag == "Wall")
@@ -83,10 +80,7 @@ public class FishController : MonoBehaviour
 
         else if (other.tag == "Bait")
         {
-            if (!canTargetBait) return;
-
-            // Debug.Log("Bait");
-
+            // if (!canTargetBait) return;
             if (GameplayManager.instance.TargetBait())
             {
                 elapsedTimeToTargetCompletion = timeToTargetCompletion;
@@ -118,7 +112,7 @@ public class FishController : MonoBehaviour
             //Release isTargetingBait and gameplaymanager
             isTargetingBait = false;
             GameplayManager.instance.ReleaseTargetBait();
-
+            forceMultiplier = swimMultiplier;
         }
     }
 
