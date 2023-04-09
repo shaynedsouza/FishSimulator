@@ -11,7 +11,7 @@ public class FishController : MonoBehaviour
     [SerializeField] bool canInteract = false, canTargetBait = false;
     [SerializeField] bool isTargetingBait = false;
     Rigidbody rigidBody;
-    float timeToTargetCompletion = 4f;
+    float timeToTargetCompletion = 1f;
     float elapsedTimeToTargetCompletion;
 
     private void OnEnable()
@@ -45,10 +45,27 @@ public class FishController : MonoBehaviour
             if (elapsedTimeToTargetCompletion <= 0f)
             {
                 isTargetingBait = false;
-                // GameplayManager.instance.ReleaseTargetBait();
-                Debug.Log("Fight it off");
+                FightItOff();
             }
         }
+    }
+
+    //Rod vs fish fighting for a win
+    void FightItOff()
+    {
+        Debug.Log("Fight it off");
+
+
+        // if (TryGetComponent<FishRodStringRenderer>(out FishRodStringRenderer fishRodStringRendererge))
+        FishRodHandler fishRodHandler = FindObjectOfType<FishRodHandler>();
+
+        if (fishRodHandler != null)
+        {
+            fishRodHandler.SetLastPointParent(gameObject);
+        }
+
+        //TODO: Reset rod to detect fishes again
+
     }
 
 

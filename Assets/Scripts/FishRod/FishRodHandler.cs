@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(FishRodStringRenderer))]
 public class FishRodHandler : MonoBehaviour
 {
-    bool canInteract = false;
+    bool canInteract = false, canTargetBaitListener = false;
 
     [Header("Rod settings")]
     [SerializeField] float maxXRotationRod = 10f;
@@ -33,6 +33,7 @@ public class FishRodHandler : MonoBehaviour
     private void OnEnable()
     {
         GameplayManager.CanInteractNotifier += CanInteractListener;
+        GameplayManager.CanTargetBaitNotifier += CanTargetBaitListener;
     }
 
 
@@ -40,6 +41,7 @@ public class FishRodHandler : MonoBehaviour
     private void OnDisable()
     {
         GameplayManager.CanInteractNotifier -= CanInteractListener;
+        GameplayManager.CanTargetBaitNotifier -= CanTargetBaitListener;
     }
 
 
@@ -71,12 +73,17 @@ public class FishRodHandler : MonoBehaviour
 
     private void Update()
     {
+
         if (!canInteract) return;
 
         //Remapping the ranges and setting the rotation
         float xRot = Map(inputHandler.mousePosition.x, 0f, Screen.width, yRodRange.x, yRodRange.y);
         float yRot = Map(inputHandler.mousePosition.y, 0f, Screen.height, xRodRange.x, xRodRange.y);
         transform.rotation = Quaternion.Euler(yRot, xRot, transform.rotation.z);
+
+
+        //Allow the user to move the rod but not the lastpoint, since it will be attached to the fish
+        if (!canTargetBaitListener) return;
 
         //Remapping the ranges and setting the position
         float xLocalPos = Map(inputHandler.mousePosition.x, 0f, Screen.width, xLocalStringRange.x, xLocalStringRange.y);
@@ -95,6 +102,12 @@ public class FishRodHandler : MonoBehaviour
 
 
 
+    public void SetLastPointParent(GameObject fishGO)
+    {
+        lastPoint.parent = fishGO.transform;
+
+    }
+
 
     #region Listeners
 
@@ -102,6 +115,11 @@ public class FishRodHandler : MonoBehaviour
     void CanInteractListener(bool value)
     {
         canInteract = value;
+    }
+
+    void CanTargetBaitListener(bool value)
+    {
+        canTargetBaitListener = value;
     }
 
     #endregion
