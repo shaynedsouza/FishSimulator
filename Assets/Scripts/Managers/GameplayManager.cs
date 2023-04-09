@@ -9,6 +9,9 @@ public class GameplayManager : MonoBehaviour
     public static Action<bool> CanInteractNotifier;
     public static Action<bool> CanTargetBaitNotifier;
     bool isTargetingBait = false;
+    public bool fightInProgress { get; private set; } = false;
+
+
 
     private void Awake()
     {
@@ -27,17 +30,31 @@ public class GameplayManager : MonoBehaviour
 
 
     //Returns true if no fish is targetting the bait else false
-    public bool TargetBait()
+    public bool CanTargetBait()
     {
         if (isTargetingBait) return false;
 
+        isTargetingBait = true;
         CanTargetBaitNotifier?.Invoke(false);
         return true;
     }
 
 
+    //When the fight for survial begins
+    public void FightItOff()
+    {
+        fightInProgress = true;
+        CanvasManager.instance.ToggleUIForFight(true);
+
+    }
+
+
     public void ReleaseTargetBait()
     {
+        isTargetingBait = false;
+        fightInProgress = false;
         CanTargetBaitNotifier?.Invoke(true);
+        CanvasManager.instance.ToggleUIForFight(false);
+
     }
 }

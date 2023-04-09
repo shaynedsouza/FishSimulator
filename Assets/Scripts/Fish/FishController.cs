@@ -11,8 +11,9 @@ public class FishController : MonoBehaviour
     float swimMultiplier = 0.3f;
     float struggleMultiplier = 1f;
     [SerializeField] bool canInteract = false, canTargetBait = false;
-    [SerializeField] bool isTargetingBait = false;
+    [SerializeField] bool isTargetingBait = false, isFighting = false;
     Rigidbody rigidBody;
+    FishAnimator fishAnimator;
     float timeToTargetCompletion = 1f;
     float elapsedTimeToTargetCompletion;
 
@@ -34,6 +35,7 @@ public class FishController : MonoBehaviour
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        fishAnimator = GetComponent<FishAnimator>();
         forceMultiplier = swimMultiplier;
     }
 
@@ -47,21 +49,27 @@ public class FishController : MonoBehaviour
             if (elapsedTimeToTargetCompletion <= 0f)
             {
                 isTargetingBait = false;
-                FightItOff();
+                StartCoroutine(FightItOff());
             }
         }
     }
 
     //Rod vs fish fighting for a win
-    void FightItOff()
+    IEnumerator FightItOff()
     {
         Debug.Log("Fight it off");
+        isFighting = true;
+        GameplayManager.instance.FightItOff();
         FishRodHandler.instance.SetLastPointParent(gameObject);
-        //TODO: Reset rod to detect fishes again
         forceMultiplier = struggleMultiplier;
+        fishAnimator.FightItOff();
 
-        rigidBody.transform.Rotate(0, Random.Range(0f, 360f), 0);
-        rigidBody.velocity = transform.forward * forceMultiplier;
+        while (GameplayManager.instance.fightInProgress)
+        {
+            rigidBody.transform.Rotate(0, Random.Range(0f, 360f), 0);
+            rigidBody.velocity = transform.forward * forceMultiplier;
+            yield return new WaitForSeconds(Random.Range(1f, 3f));
+        }
     }
 
 
@@ -81,7 +89,7 @@ public class FishController : MonoBehaviour
         else if (other.tag == "Bait")
         {
             // if (!canTargetBait) return;
-            if (GameplayManager.instance.TargetBait())
+            if (GameplayManager.instance.CanTargetBait())
             {
                 elapsedTimeToTargetCompletion = timeToTargetCompletion;
                 isTargetingBait = true;

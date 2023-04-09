@@ -114,7 +114,7 @@ public class FishRodHandler : MonoBehaviour
     public void SetLastPointParent(GameObject fishGO)
     {
         lastPoint.parent = fishGO.transform;
-
+        lastPoint.localPosition = Vector3.zero;
     }
 
 

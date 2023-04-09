@@ -36,6 +36,11 @@ public class FishAnimator : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public void FightItOff()
+    {
+        animator.Play(swimImpusle);
+    }
+
 
     #region Listeners
 
