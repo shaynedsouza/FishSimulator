@@ -585,6 +585,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 554624371}
+  - {fileID: 761032298}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -610,6 +611,7 @@ MonoBehaviour:
   fishHealthTile: {fileID: 1771045445}
   rodHealthFill: {fileID: 1573316680}
   fishHealthFill: {fileID: 847305600}
+  bloodFill: {fileID: 761032299}
 --- !u!1 &352776937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1147,81 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25d5f60dd5da8eb4190a7c2e96ba6397, type: 3}
+--- !u!1 &761032297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 761032298}
+  - component: {fileID: 761032300}
+  - component: {fileID: 761032299}
+  m_Layer: 5
+  m_Name: BloodImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &761032298
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761032297}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 304238347}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &761032299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761032297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 8b9d014fee2732f43b737c2bf36cd70e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &761032300
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761032297}
+  m_CullTransparentMesh: 1
 --- !u!33 &772528172
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1538,6 +1615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6f02b9cc1b43a40bef55b723dd9ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rodModel: {fileID: 1101107439748909523}
   maxXRotationRod: 10
   maxYRotationRod: 40
   maxLocalXOffsetString: 2
@@ -2834,7 +2912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6276580440118541682, guid: bb4f92195ef1cc24c94034950e31a46c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.322468
+      value: -0.71
       objectReference: {fileID: 0}
     - target: {fileID: 6276580440118541682, guid: bb4f92195ef1cc24c94034950e31a46c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2842,7 +2920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6276580440118541682, guid: bb4f92195ef1cc24c94034950e31a46c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.07485318
+      value: 1.59
       objectReference: {fileID: 0}
     - target: {fileID: 6276580440118541682, guid: bb4f92195ef1cc24c94034950e31a46c, type: 3}
       propertyPath: m_LocalRotation.w

@@ -8,8 +8,10 @@ public class FishController : MonoBehaviour
 {
 
     float forceMultiplier;
-    float swimMultiplier = 0.3f;
-    float struggleMultiplier = 1f;
+    [SerializeField] float swimSpeedMultiplier = 0.3f;
+    [SerializeField] float struggleSpeedMultiplier = 1f;
+    [SerializeField] float minFrequencyDirChange = 2f;
+    [SerializeField] float maxFrequencyDirChange = 5f;
     [SerializeField] bool canInteract = false, canTargetBait = false;
     [SerializeField] bool isTargetingBait = false, isFighting = false;
     Rigidbody rigidBody;
@@ -36,7 +38,7 @@ public class FishController : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         fishAnimator = GetComponent<FishAnimator>();
-        forceMultiplier = swimMultiplier;
+        forceMultiplier = swimSpeedMultiplier;
     }
 
 
@@ -57,18 +59,17 @@ public class FishController : MonoBehaviour
     //Rod vs fish fighting for a win
     IEnumerator FightItOff()
     {
-        Debug.Log("Fight it off");
         isFighting = true;
         GameplayManager.instance.FightItOff(gameObject);
         FishRodHandler.instance.SetLastPointParent(gameObject);
-        forceMultiplier = struggleMultiplier;
+        forceMultiplier = struggleSpeedMultiplier;
         fishAnimator.FightItOff();
 
         while (GameplayManager.instance.fightInProgress)
         {
             rigidBody.transform.Rotate(0, Random.Range(0f, 360f), 0);
             rigidBody.velocity = transform.forward * forceMultiplier;
-            yield return new WaitForSeconds(Random.Range(2f, 5f));
+            yield return new WaitForSeconds(Random.Range(minFrequencyDirChange, maxFrequencyDirChange));
         }
     }
 
@@ -105,14 +106,6 @@ public class FishController : MonoBehaviour
     }
 
 
-
-    // private void OnTriggerStay(Collider other)
-    // {
-    //     if (other.tag == "Bait")
-    //     {
-    //     }
-    // }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Bait" && isTargetingBait)
@@ -120,7 +113,7 @@ public class FishController : MonoBehaviour
             //Release isTargetingBait and gameplaymanager
             isTargetingBait = false;
             GameplayManager.instance.ReleaseTargetBait();
-            forceMultiplier = swimMultiplier;
+            forceMultiplier = swimSpeedMultiplier;
         }
     }
 

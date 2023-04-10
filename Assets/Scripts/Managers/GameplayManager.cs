@@ -73,7 +73,7 @@ public class GameplayManager : MonoBehaviour
         rodHealth = 1f;
         int counter = 1, score = 0;
         Vector2 mousePosition;
-        while (fishHealth > 0f && rodHealth > 0f)
+        while (fishHealth > 0.01f && rodHealth > 0.01f)
         {
             yield return new WaitForSeconds(0.2f);
 
@@ -98,14 +98,27 @@ public class GameplayManager : MonoBehaviour
                 if (score > 0)
                     fishHealth -= 0.2f;
                 else
+                {
                     rodHealth -= 0.2f;
-
+                    CanvasManager.instance.TakeDamage();
+                }
 
                 CanvasManager.instance.UpdateHealth(rodHealth, fishHealth);
                 score = 0;
             }
             counter++;
 
+        }
+
+        FishRodHandler.instance.KillVibrations();
+
+        if (fishHealth > 0.01f)
+        {
+            Debug.Log("Lost");
+        }
+        else
+        {
+            Debug.Log("Won");
         }
     }
 

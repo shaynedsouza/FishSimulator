@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(InputHandler))]
 [RequireComponent(typeof(FishRodStringRenderer))]
 public class FishRodHandler : MonoBehaviour
 {
     bool canInteract = false, canTargetBaitListener = false;
+
+
+    [SerializeField] Transform rodModel;
 
     [Header("Rod settings")]
     [SerializeField] float maxXRotationRod = 10f;
@@ -77,6 +81,7 @@ public class FishRodHandler : MonoBehaviour
         zLocalStringRange.x = lastPoint.localPosition.z - maxLocalZOffsetString;
         zLocalStringRange.y = lastPoint.localPosition.z + maxLocalZOffsetString;
 
+
     }
 
 
@@ -115,8 +120,12 @@ public class FishRodHandler : MonoBehaviour
     {
         lastPoint.parent = fishGO.transform;
         lastPoint.localPosition = Vector3.zero;
+        rodModel.DOShakePosition(0.1f, 0.01f, 1, 10).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
     }
-
+    public void KillVibrations()
+    {
+        DOTween.Kill(rodModel);
+    }
 
     #region Listeners
 
