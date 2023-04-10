@@ -13,7 +13,7 @@ public class FishController : MonoBehaviour
     [SerializeField] float minFrequencyDirChange = 2f;
     [SerializeField] float maxFrequencyDirChange = 5f;
     [SerializeField] bool canInteract = false, canTargetBait = false;
-    [SerializeField] bool isTargetingBait = false, isFighting = false;
+    [SerializeField] bool isTargetingBait = false;
     Rigidbody rigidBody;
     FishAnimator fishAnimator;
     float timeToTargetCompletion = 1f;
@@ -59,7 +59,6 @@ public class FishController : MonoBehaviour
     //Rod vs fish fighting for a win
     IEnumerator FightItOff()
     {
-        isFighting = true;
         GameplayManager.instance.FightItOff(gameObject);
         FishRodHandler.instance.SetLastPointParent(gameObject);
         forceMultiplier = struggleSpeedMultiplier;
@@ -71,6 +70,7 @@ public class FishController : MonoBehaviour
             rigidBody.velocity = transform.forward * forceMultiplier;
             yield return new WaitForSeconds(Random.Range(minFrequencyDirChange, maxFrequencyDirChange));
         }
+        forceMultiplier = swimSpeedMultiplier;
     }
 
 
@@ -128,6 +128,9 @@ public class FishController : MonoBehaviour
 
         if (canInteract)
         {
+            if (!rigidBody)
+                rigidBody = GetComponent<Rigidbody>();
+
             rigidBody.transform.Rotate(0, Random.Range(0f, 360f), 0);
             rigidBody.velocity = transform.forward * forceMultiplier;
         }

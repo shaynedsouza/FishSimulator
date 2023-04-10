@@ -124,6 +124,7 @@ public class FishRodHandler : MonoBehaviour
     }
     public void KillVibrations()
     {
+        lastPoint.parent = transform.parent;
         DOTween.Kill(rodModel);
     }
 

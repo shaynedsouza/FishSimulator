@@ -27,7 +27,6 @@ public class GameplayManager : MonoBehaviour
 
     private void Start()
     {
-
         CanInteractNotifier?.Invoke(true);
         CanTargetBaitNotifier?.Invoke(true);
 
@@ -73,17 +72,19 @@ public class GameplayManager : MonoBehaviour
         rodHealth = 1f;
         int counter = 1, score = 0;
         Vector2 mousePosition;
+        CanvasManager.instance.UpdateHealth(rodHealth, fishHealth);
+
         while (fishHealth > 0.01f && rodHealth > 0.01f)
         {
             yield return new WaitForSeconds(0.2f);
 
 
 
+            //Get mouse position in graph axis with unit magnitude 
             mousePosition.x = (inputHandler.mousePosition.x / Screen.width * 2f) - 1f;
             mousePosition.y = (inputHandler.mousePosition.y / Screen.height * 2f) - 1f;
 
-
-
+            //Perform dot product to check if directions align
             if (Vector3.Dot(mousePosition, fishInFight.transform.forward) >= 0f)
                 score++;
             else
@@ -94,7 +95,6 @@ public class GameplayManager : MonoBehaviour
             //Perform action every 2secs (0.2f x 10)
             if (counter % 10 == 0)
             {
-                // Debug.Log("Score" + score);
                 if (score > 0)
                     fishHealth -= 0.2f;
                 else
@@ -111,14 +111,17 @@ public class GameplayManager : MonoBehaviour
         }
 
         FishRodHandler.instance.KillVibrations();
+        CanInteractNotifier?.Invoke(false);
 
         if (fishHealth > 0.01f)
         {
-            Debug.Log("Lost");
+            fightInProgress = false;
+            CanvasManager.instance.DisplayResult(false);
         }
         else
         {
-            Debug.Log("Won");
+            Destroy(fishInFight);
+            CanvasManager.instance.DisplayResult(true);
         }
     }
 
@@ -132,7 +135,6 @@ public class GameplayManager : MonoBehaviour
         CanvasManager.instance.ToggleUIForFight(false);
 
     }
-
 
 
 
