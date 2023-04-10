@@ -59,7 +59,7 @@ public class FishController : MonoBehaviour
     {
         Debug.Log("Fight it off");
         isFighting = true;
-        GameplayManager.instance.FightItOff();
+        GameplayManager.instance.FightItOff(gameObject);
         FishRodHandler.instance.SetLastPointParent(gameObject);
         forceMultiplier = struggleMultiplier;
         fishAnimator.FightItOff();
@@ -68,7 +68,7 @@ public class FishController : MonoBehaviour
         {
             rigidBody.transform.Rotate(0, Random.Range(0f, 360f), 0);
             rigidBody.velocity = transform.forward * forceMultiplier;
-            yield return new WaitForSeconds(Random.Range(1f, 3f));
+            yield return new WaitForSeconds(Random.Range(2f, 5f));
         }
     }
 
